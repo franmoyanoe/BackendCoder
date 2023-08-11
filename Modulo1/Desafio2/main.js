@@ -10,7 +10,7 @@ class Product{
         this.stock = stock
         this.id = Product.incrementId()
     }
-    static incrementId(){
+     static incrementId(){
         if(this.idIncrement){
             this.idIncrement++
         }else{
@@ -27,7 +27,7 @@ class ProductManager{
 
     getProducts = async () => {
       const products = JSON.parse(await fs.readFile(this.path,'utf-8'))
-      return products;
+      return products
    }
 
 
@@ -61,7 +61,7 @@ class ProductManager{
         }
     }
     updateProduct = async(id, product) => {
-        const products = JSON.parse(await fs.readFile(path, 'utf-8'))
+        const products = JSON.parse(await fs.readFile(this.path,'utf-8'))
         const index = products.findIndex(prod => prod.id === id)
         if (index != -1) {
             products[index].title = product.title
