@@ -9,7 +9,7 @@ const PORT = 4000;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-const productManager = new ProductManager('./productos.txt');
+const productManager = new ProductManager('./productos.json');
 
 app.get('/', (req, res) => {
   res.send("Hola desde la página de inicio de mi app");
