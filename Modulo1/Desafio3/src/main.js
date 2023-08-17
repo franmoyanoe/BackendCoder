@@ -2,7 +2,6 @@
 import express from 'express';
 //import { promises as fs } from 'fs';
 import ProductManager from './ProductManager.js';
-
 const app = express();
 const PORT = 4000;
 
@@ -11,8 +10,9 @@ app.use(express.json());
 
 const productManager = new ProductManager('./productos.json');
 
+
 app.get('/', (req, res) => {
-  res.send("Hola desde la página de inicio de mi app");
+  res.send("Hola desde la página de inicio, este es el desafio 3 ");
 });
 
 /*
@@ -31,6 +31,7 @@ app.get('/products', async (req, res) => {
     try {
       const products = await productManager.getProducts();
       const limit = parseInt(req.query.limit);
+      console.log(`query : ${limit}`);
   
       if (!isNaN(limit) && limit > 0) {
         const limitedProducts = products.slice(0, limit);
@@ -43,11 +44,12 @@ app.get('/products', async (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   });
-  //Ejemplo /products?limit=1
+  //Ej    /products?limit=1
   app.get('/products/:pid', async (req, res) => {
     try {
       const products = await productManager.getProducts();
       const productId = parseInt(req.params.pid);
+      console.log(`pid: ${productId}`);
   
       if (!isNaN(productId)) {
         const product = products.find(p => p.id === productId);
@@ -64,7 +66,7 @@ app.get('/products', async (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   });
-  //Ejemplo de uso /products/1
+  //Ej de uso     /products/2
   
 app.get('*', (req, res) => {
   res.send("Error 404");
