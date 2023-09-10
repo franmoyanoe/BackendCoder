@@ -1,0 +1,39 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.home{
+    background-color: rgb(0, 0, 0);
+    flex-direction: column;
+    min-height: 90vh;
+}
+.home li{
+    font-weight: bolder;
+    margin-bottom: 5px;
+    border: 1px solid;
+    color: white;
+}
+div ul{
+
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 20px 30px;
+}
+/*Seccion navegador y footer*/
+nav{
+
+    font-size: 20px;
+    height: 35px;
+    background-color: rgba(0, 145, 255, 0.631);
+}
+nav h1{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+}
+footer{
+    text-align: center;
+    font-size: 20px;
+    background-color: rgba(0, 145, 255, 0.631);
+}
