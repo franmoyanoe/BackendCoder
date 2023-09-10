@@ -5,7 +5,7 @@ import mongoose from 'mongoose'
 const app = express()
 const PORT = 4000
 
-mongoose.connect('mongodb+srv://francomoyano:EPBa6FrFh5FStd3t@cluster0.r7cxn6u.mongodb.net/?retryWrites=true&w=majority')
+mongoose.connect('mongodb+srv://francomoyano:<password>@cluster0.r7cxn6u.mongodb.net/?retryWrites=true&w=majority')
     .then(() => console.log("BDD conectada"))
     .catch((error) => console.log("Error en conexion con MongoDB ATLAS: ", error))
 
