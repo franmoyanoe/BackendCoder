@@ -27,5 +27,4 @@ cartSchema.pre('findOne', function () {
 })
 
 
-const cartModel = model('carts', cartSchema)
-export default cartModel
+export const cartModel = model('carts', cartSchema)

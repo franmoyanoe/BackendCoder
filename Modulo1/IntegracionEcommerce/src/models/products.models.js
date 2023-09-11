@@ -35,5 +35,5 @@ const productSchema = new Schema({
 })
 
 const productModel = model('products', productSchema)
-
-export default productModel 
+export default productModel
+ 

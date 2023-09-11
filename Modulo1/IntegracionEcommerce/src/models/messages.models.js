@@ -8,9 +8,11 @@ const messageSchema = new Schema({
     message: {
         type: String,
         required: true
+    },
+    postTime: {
+        type: Date,
+        default: Date.now //Devolve la fecha actual
     }
 })
 
-const messageModel = model('messages', messageSchema)
-
-export default messageModel
+export const messageModel = model('messages', messageSchema)
