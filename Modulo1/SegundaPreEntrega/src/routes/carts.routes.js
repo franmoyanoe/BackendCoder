@@ -7,21 +7,21 @@ const productManager = new ProductManager()
  
 const cartRouter =Router()
 
-cartRouter.get("/carts",async(req,res)=>{
+cartRouter.get("/",async(req,res)=>{
    const carrito=await cartManager.getCarts()
    res.json({carrito})
 })
 
-cartRouter.get("/carts/:cid",async(req,res)=>{
+cartRouter.get("/:cid",async(req,res)=>{
     const carritofound=await cartManager.getCartbyId(req.params)
     res.json({status:"success",carritofound})
 })
 
 
 
-cartRouter.post('/carts', async (req, res) => {
+cartRouter.post('/', async (req, res) => {
   try {
-      const { obj } = req.body;
+      const obj  = req.body;
 
       if (!Array.isArray(obj)) {
           return res.status(400).send('Invalid request: products must be an array');
@@ -45,7 +45,7 @@ cartRouter.post('/carts', async (req, res) => {
       res.status(500).send('Internal Server Error');
   }
 });
-cartRouter.post("/carts/:cid/products/:pid", async (req, res) => {
+cartRouter.post("/:cid/products/:pid", async (req, res) => {
     const { cid, pid } = req.params;
     const { quantity } = req.body;
   

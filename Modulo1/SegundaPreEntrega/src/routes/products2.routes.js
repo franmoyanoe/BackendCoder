@@ -1,81 +1,75 @@
-import { Router } from "express";
-//import productModel from "../models/products.models.js";
-import ProductManager from "../dao/MongoDB/productManagerMongo.js"
 
-const manager=new ProductManager()
-const productRouter = Router()
+import { Router } from 'express'
+import ProductManager from '../dao/fileSystem/controllers/ProductManager.js';
+//import { ProductManager } from './ProductManager.js'
+
+const productManager = new ProductManager('src/models/productos.txt')
+
+const ProductRouter = Router()
 
 
-productRouter.get("/",async(req,res)=>{
+
+ProductRouter.get('/', async (req, res) => {
     const { limit } = req.query
-    const products= await manager.getProducts(limit)
 
-      if (products === 'error') {
-        res.status(500).send({ error: "Hubo un error al consultar productos." });
-      } else if (products.length === 0) {
-        res.status(400).send({ error: `Error al consultar productos: ${error}` })
-        //res.json("No hay productos en la tienda");
-      } else {
-        //res.json({message:"success",products})
-        res.status(200).send({ resultado: 'OK', message: products });
-      }
-  })
-
-productRouter.get('/:id', async (req, res) => {
-    const { id } = req.params
-        const product = await productModel.findById(id)
-
-      if (product === 'error') {
-        res.status(500).send({ error: "Hubo un error al buscar el producto." });
-      } else if (product.length === 0) {
-        res.status(400).send({ error: `Error no hay producto en la lista` })
-        //res.json("No hay productos en la tienda");
-      } else {
-        //res.json({message:"success",products})
-        res.status(200).send({ resultado: 'OK', message: product });
-      }
-})
-
-productRouter.post('/', async (req, res) => {
-        const obj=req.body
-        const newProduct = await manager.addProduct(obj);
-
-        if (newProduct === 'error') {
-            res.status(500).send({ error: "Hubo un error al intentar agregar un nuevo producto." });
-        } else if (newProduct.length === 0) {
-            res.status(400).send({ error: `Producto ingresado vacio` })
-        }else {
-        res.status(200).send({ resultado: 'Producto agregado correctamente', message: newProduct })
-        }
+    const prods = await productManager.getProducts()
+    const products = prods.slice(0, limit)
+    res.status(200).send(products)
 
 })
 
-productRouter.put('/:id', async (req, res) => {
-    const { id } = req.params
-    const { obj } = req.body
+ProductRouter.get('/:pid', async (req, res) => {
+    const { pid } = req.params
+    const prod = await productManager.getProductById(parseInt(pid))
 
-    const updatedproduct = await manager.updateProduct(pid,obj);
+    if (prod)
+        res.status(200).send(prod)
+    else
+        res.status(404).send("Producto no existente")
+})
 
-    if (updatedproduct === 'error') {
-        res.status(500).send({ error: "Hubo un error al intentar actualizar el producto." });
-    } else if (updatedproduct.length === 0) {
-        res.status(400).send({ error: `Producto ingresado vacio` })
-    }else {
-    res.status(200).send({ resultado: 'Producto actualizado correctamente', message: updatedproduct })
+ProductRouter.post('/', async (req, res) => {
+
+    const productData = req.body;
+
+    if (!productData.title || !productData.description || !productData.code || !productData.price || !productData.stock || !productData.category) {
+        return res.status(400).send('Todos los campos son obligatorios');
     }
-})
 
-productRouter.delete('/:id', async (req, res) => {
-    const { id } = req.params
-    const deleteproduct = await manager.deleteProduct(id);
+    const confirmacion = await productManager.addProduct(productData);
 
-    if (deleteproduct === 'error') {
-        res.status(500).send({ error: "Hubo un error al intentar eliminar un nuevo producto." });
-    } else if (deleteproduct.length === 0 || deleteproduct == null) {
-        res.status(400).send({ error: `No hay producto para eliminar` })
-    }else {
-    res.status(200).send({ resultado: 'Producto eliminado correctamente', message: deleteproduct })
+    if (confirmacion) {
+        res.status(201).send('Producto agregado correctamente');
+    } else {
+        res.status(401).send('Error al agregar el producto');
     }
+
 })
 
-export default productRouter
+ProductRouter.put('/:pid', async (req, res) => {
+
+    const prodId = parseInt(req.params.pid);
+
+    const confirmacion = await productManager.updateProduct(prodId, req.body)
+
+    if (confirmacion)
+        res.status(200).send("Producto actualizado correctamente")
+    else
+        res.status(404).send("Producto no encontrado")
+
+})
+
+ProductRouter.delete('/:pid', async (req, res) => {
+
+    const prodId = parseInt(req.params.pid);
+
+    const confirmacion = await productManager.deleteProduct(prodId)
+
+    if (confirmacion)
+        res.status(200).send("Producto eliminado correctamente")
+    else
+        res.status(404).send("Producto no encontrado")
+})
+
+export default ProductRouter
+

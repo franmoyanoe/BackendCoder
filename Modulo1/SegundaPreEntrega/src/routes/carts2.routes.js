@@ -4,7 +4,7 @@ import { Router } from 'express';
 import CartManager from '../dao/fileSystem/controllers/CartManager.js';
 
 
-const cartManager = new CartManager('src/models/carrito.json');
+const cartManager = new CartManager('src/models/carrito.txt');
 const routerCart = Router();
 
 // Agrega las rutas para el carrito aquí

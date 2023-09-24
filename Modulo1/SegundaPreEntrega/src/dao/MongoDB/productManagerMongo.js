@@ -2,9 +2,18 @@ import  { productsModel }  from "../models/products.models.js"
 
   export default class ProductManagerMongo{
 
-    getProducts = async (limit) => {
+    getProductsAll = async () => {
+      try {
+          const products = await productsModel.find()
+          return products
+      } catch (error) {
+          console.error("Se ha producido un error en productManagerMongo getProducts:", error);
+      }
+  }
+
+    getProducts = async (query, { limit, page, sort: sortOption }) => {
         try {
-            const products = await productsModel.find().limit(limit);
+            const products = await productsModel.paginate(query, { limit, page, sort: sortOption });
             return products
         } catch (error) {
             console.error("Se ha producido un error en productManagerMongo getProducts:", error);

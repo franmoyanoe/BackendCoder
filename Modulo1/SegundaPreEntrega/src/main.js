@@ -86,7 +86,7 @@ io.on("connection",async(socket)=>{
 
     console.log("Conection with socket.io Mongo")
 
-    const Productos =await productManagerSocket.getProducts()
+    const Productos =await productManagerSocket.getProductsAll()
     socket.emit("envioProductos", Productos)
 
     socket.on('nuevoProducto', async (prod) => {
@@ -99,10 +99,10 @@ io.on("connection",async(socket)=>{
     socket.on("deleteProduct",async(id)=>{
         console.log(id)
        await productManagerSocket.deleteProduct(id)
-       const Productos =await productManagerSocket.getProducts()
+       const Productos =await productManagerSocket.getProductsAll()
        socket.emit("envioProductos", Productos)
         })
-
+ 
       socket.on('mensaje', async info => {
 		const { email, message } = info;
 		await messagesManagerSocket.createMessage({

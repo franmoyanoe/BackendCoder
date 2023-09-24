@@ -1,75 +1,87 @@
+import { Router } from "express";
+//import productModel from "../models/products.models.js";
+import ProductManager from "../dao/MongoDB/productManagerMongo.js"
 
-import { Router } from 'express'
-import ProductManager from '../dao/fileSystem/controllers/ProductManager.js';
-//import { ProductManager } from './ProductManager.js'
+const productManager=new ProductManager()
+const productRouter = Router()
 
-const productManager = new ProductManager('src/models/productos.json')
+//la ruta para probar http://localhost:8080/api/products?limit=4&page=2&sort=desc&category=Moto grande&status=false
+productRouter.get("/",async(req,res)=>{
 
-const ProductRouter = Router()
+    const { limit = 10, page = 1, sort, category, status } = req.query
+    const sortOption = sort === 'asc' ? 'price' : sort === 'desc' ? '-price' : null;
+    const query = {};
+    if (category) query.category = category;
+    if (status) query.status = status;
+  
+    const products= await productManager.getProducts(query, { limit, page, sort: sortOption })
 
-
-
-ProductRouter.get('/', async (req, res) => {
-    const { limit } = req.query
-
-    const prods = await productManager.getProducts()
-    const products = prods.slice(0, limit)
-    res.status(200).send(products)
-
-})
-
-ProductRouter.get('/:pid', async (req, res) => {
-    const { pid } = req.params
-    const prod = await productManager.getProductById(parseInt(pid))
-
-    if (prod)
-        res.status(200).send(prod)
-    else
-        res.status(404).send("Producto no existente")
-})
-
-ProductRouter.post('/', async (req, res) => {
-
-    const productData = req.body;
-
-    if (!productData.title || !productData.description || !productData.code || !productData.price || !productData.stock || !productData.category) {
-        return res.status(400).send('Todos los campos son obligatorios');
-    }
-
-    const confirmacion = await productManager.addProduct(productData);
-
-    if (confirmacion) {
-        res.status(201).send('Producto agregado correctamente');
+    if (products === 'error') {
+      res.status(500).send({ error: "Hubo un error al consultar productos." });
     } else {
-        res.status(401).send('Error al agregar el producto');
+      if (products.length === 0) {
+        res.status(400).send({ error: "No hay productos en la tienda." });
+      } else {
+        res.status(200).send({ resultado: 'OK', message: products });
+      }
     }
+  })
+
+productRouter.get('/:id', async (req, res) => {
+    const { id } = req.params
+        const product = await productModel.findById(id)
+
+      if (product === 'error') {
+        res.status(500).send({ error: "Hubo un error al buscar el producto." });
+      } else if (product.length === 0) {
+        res.status(400).send({ error: `Error no hay producto en la lista` })
+        //res.json("No hay productos en la tienda");
+      } else {
+        //res.json({message:"success",products})
+        res.status(200).send({ resultado: 'OK', message: product });
+      }
+})
+
+productRouter.post('/', async (req, res) => {
+        const obj=req.body
+        const newProduct = await productManager.addProduct(obj);
+
+        if (newProduct === 'error') {
+            res.status(500).send({ error: "Hubo un error al intentar agregar un nuevo producto." });
+        } else if (newProduct.length === 0) {
+            res.status(400).send({ error: `Producto ingresado vacio` })
+        }else {
+        res.status(200).send({ resultado: 'Producto agregado correctamente', message: newProduct })
+        }
 
 })
 
-ProductRouter.put('/:pid', async (req, res) => {
+productRouter.put('/:id', async (req, res) => {
+    const { id } = req.params
+    const  obj  = req.body
 
-    const prodId = parseInt(req.params.pid);
+    const updatedproduct = await productManager.updateProduct(pid,obj);
 
-    const confirmacion = await productManager.updateProduct(prodId, req.body)
-
-    if (confirmacion)
-        res.status(200).send("Producto actualizado correctamente")
-    else
-        res.status(404).send("Producto no encontrado")
-
+    if (updatedproduct === 'error') {
+        res.status(500).send({ error: "Hubo un error al intentar actualizar el producto." });
+    } else if (updatedproduct.length === 0) {
+        res.status(400).send({ error: `Producto ingresado vacio` })
+    }else {
+    res.status(200).send({ resultado: 'Producto actualizado correctamente', message: updatedproduct })
+    }
 })
 
-ProductRouter.delete('/:pid', async (req, res) => {
+productRouter.delete('/:id', async (req, res) => {
+    const { id } = req.params
+    const deleteproduct = await productManager.deleteProduct(id);
 
-    const prodId = parseInt(req.params.pid);
-
-    const confirmacion = await productManager.deleteProduct(prodId)
-
-    if (confirmacion)
-        res.status(200).send("Producto eliminado correctamente")
-    else
-        res.status(404).send("Producto no encontrado")
+    if (deleteproduct === 'error') {
+        res.status(500).send({ error: "Hubo un error al intentar eliminar un nuevo producto." });
+    } else if (deleteproduct.length === 0 || deleteproduct == null) {
+        res.status(400).send({ error: `No hay producto para eliminar` })
+    }else {
+    res.status(200).send({ resultado: 'Producto eliminado correctamente', message: deleteproduct })
+    }
 })
 
-export default ProductRouter
-
+export default productRouter
