@@ -4,6 +4,7 @@ import { createHash } from "../utils/bcrypt.js";
 import passport from "passport";
 
 const userRouter = Router()
+//Ingresar usuario sin encriptar password
 /*
 userRouter.post('/', async (req, res) => {
     const { first_name, last_name, email, password, age } = req.body
@@ -26,10 +27,20 @@ userRouter.post('/', async (req, res) => {
 
 })
 */
+
+//Encriptar contraseña con bcrypt
 /*
+    {
+    "first_name":"Lex",
+    "last_name": "Luthor",
+    "email":"lex@lex.com",
+    "password":"123",
+    "age":26 
+    }
+*/
     userRouter.post('/', async (req, res) => {
     const { first_name, last_name, email, password, age } = req.body
-    console.log(password)
+    //console.log(password)
     try {
         const hashPassword = createHash(password)
         const response = await userModel.create({
@@ -45,8 +56,8 @@ userRouter.post('/', async (req, res) => {
     }
 
 })
-*/
 
+/*
     userRouter.post('/', passport.authenticate('register'), async (req, res) => {
     try {
         if (!req.user) {
@@ -57,7 +68,7 @@ userRouter.post('/', async (req, res) => {
         res.status(500).send({ mensaje: `Error al crear usuario ${error}` })
     }
 })
-
+*/
 
 userRouter.get('/', async (req, res) => {
 	try {

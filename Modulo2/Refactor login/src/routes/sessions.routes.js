@@ -4,6 +4,7 @@ import { validatePassword } from "../utils/bcrypt.js";
 import passport from "passport";
 
 const sessionRouter = Router()
+
 /*
 sessionRouter.post('/login', async (req, res) => {
     const { email, password } = req.body
@@ -17,8 +18,8 @@ sessionRouter.post('/login', async (req, res) => {
             if(password === '123'){
                 req.session.login = true;
 			    req.session.user = {
-				first_name: 'Coder',
-				last_name: 'House',
+				first_name: 'Franco',
+				last_name: 'Franco',
 				age: 26,
 				email: email,
 				rol: 'admin',
@@ -58,7 +59,15 @@ sessionRouter.post('/login', async (req, res) => {
             }
 })
 */
+
+//Uso de validacion de password
 /*
+    {
+    "email":"lex@lex.com",
+    "password":"123"
+    }
+*/
+
     sessionRouter.post('/login', async (req, res) => {
     const { email, password } = req.body
 
@@ -83,8 +92,11 @@ sessionRouter.post('/login', async (req, res) => {
         res.status(400).send({ error: `Error en login: ${error}` })
     }
 })
-*/
 
+
+
+//Autenticacion con github
+/*
 sessionRouter.post('/login', passport.authenticate('login'), async (req, res) => {
     try {
         if (!req.user) {
@@ -104,6 +116,8 @@ sessionRouter.post('/login', passport.authenticate('login'), async (req, res) =>
     }
 })
 
+
+
 sessionRouter.get('/github', passport.authenticate('github', { scope: ['user:email'] }), async (req, res) => {
     res.status(200).send({ mensaje: 'Usuario creado' })
 })
@@ -112,11 +126,14 @@ sessionRouter.get('/githubSession', passport.authenticate('github'), async (req,
     req.session.user = req.user
     res.status(200).send({ mensaje: 'Session creada' })
 })
-
+*/
 sessionRouter.get('/logout', (req, res) => {
-    if (req.session.login) {
+
+    //if (req.session.login) 
+    if (req.session){
         req.session.destroy()
     }
+    console.log(req.session)
     //res.redirect('http://localhost:8080/static/login'); 
     res.status(200).send({ resultado: 'Login eliminado' })
 })
