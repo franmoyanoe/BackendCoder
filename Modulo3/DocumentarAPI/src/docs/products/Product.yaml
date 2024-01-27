@@ -2,100 +2,138 @@ paths:
   /api/product/:
     get:
       summary: Obtener a todos los usuarios
-      tags: 
+      tags:
         - Products
       responses:
-        '200':
+        "200":
           description: Usuarios obtenidos satisfactoriamente
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Product'
-        '500':
+                  $ref: "#/components/schemas/Product"
+        "500":
           description: Error interno del servidor al obtener los usuarios
     post:
       summary: Ingresar productos
-      tags: 
+      tags:
         - Products
       responses:
-        '200':
+        "200":
           description: Usuarios obtenidos satisfactoriamente
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Product'
-        '500':
+                  $ref: "#/components/schemas/Product"
+        "500":
           description: Error interno del servidor al obtener los usuarios
-          
+
   /api/product/{id}:
     get:
       summary: Obtener un solo usuario dado su id
-      tags: 
+      tags:
         - Products
       parameters:
         - name: id
           in: path
           required: true
-          schema: 
+          schema:
             $type: String
           description: Id del usuario a buscar
       responses:
-        '200':
+        "200":
           description: Usuario obtenido satisfactoriamente
           content:
             application/json:
               schema:
                 items:
-                  $ref: '#/components/schemas/Product'
-        '500':
+                  $ref: "#/components/schemas/Product"
+        "500":
           description: Error interno del servidor al obtener los usuarios
     put:
       summary: Modificar producto
-      tags: 
+      tags:
         - Products
       responses:
-        '200':
+        "200":
           description: Usuarios obtenidos satisfactoriamente
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Product'
-        '500':
-          description: Error interno del servidor al obtener los usuarios          
+                  $ref: "#/components/schemas/Product"
+        "500":
+          description: Error interno del servidor al obtener los usuarios
     delete:
       summary: Eliminar producto
-      tags: 
+      tags:
         - Products
       responses:
-        '200':
+        "200":
           description: Usuarios obtenidos satisfactoriamente
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Product'
-        '500':
-          description: Error interno del servidor al obtener los usuarios          
+                  $ref: "#/components/schemas/Product"
+        "500":
+          description: Error interno del servidor al obtener los usuarios
   /api/product/mockingProducts:
     post:
       summary: Obtener a todos los usuarios
-      tags: 
+      tags:
         - Products
       responses:
-        '200':
+        "200":
           description: Usuarios obtenidos satisfactoriamente
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Product'
-        '500':
-          description: Error interno del servidor al obtener los usuarios          
+                  $ref: "#/components/schemas/Product"
+        "500":
+          description: Error interno del servidor al obtener los usuarios
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        _id:
+          type: 0bjectId
+          description: ID autogenerado por MongoDb
+        title:
+          type: string
+          description: Titulo del producto
+        description:
+          type: string
+          description: Descripcion del producto
+        price:
+          type: number
+          description: Precio del producto
+        stock:
+          type: number
+          description: Stock del producto
+        category:
+          type: string
+          description: Categoria del producto
+        status:
+          type: boolean
+          description: Disponible o no disponible
+        code:
+          type: string
+          description: Codigo del producto
+      example:
+        _id: ObjectId('31ewewx312312')
+        title: Pelota
+        description: Pelota Puma ...
+        price: 500
+        stock: 600
+        category: Deportes
+        status: True
+        code: dep1234
