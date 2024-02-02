@@ -1,0 +1,38 @@
+[
+  {
+    "title": "Rouser NS 200",
+    "description": "Motocicleta marca Bajaj",
+    "price": "3000",
+    "thumbnail": "/static/products/1706908184366-rouserns200fi_edit-14.jpg",
+    "code": "bajaj1",
+    "stock": "7",
+    "category": "Bajaj",
+    "status": true,
+    "owner": "admin",
+    "_id": 1
+  },
+  {
+    "title": "Honda Titan 150",
+    "description": "Motocicleta marca Honda",
+    "price": "2000",
+    "thumbnail": "/static/products/1706908229525-honda-titan-cg-150-gallery-880509-020180507185300.jpg",
+    "code": "honda1",
+    "stock": "15",
+    "category": "Honda",
+    "status": true,
+    "owner": "admin",
+    "_id": 2
+  },
+  {
+    "title": "Yamaha YBR 125",
+    "description": "Motocicleta marca Yamaha",
+    "price": "1800",
+    "thumbnail": "/static/products/1706908342503-web_catalogo__page-0045.jpg",
+    "code": "yama1",
+    "stock": "20",
+    "category": "Yamaha",
+    "status": true,
+    "owner": "admin",
+    "_id": 3
+  }
+]

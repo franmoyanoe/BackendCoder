@@ -1,0 +1,59 @@
+[
+  {
+    "first_name": "Prueba",
+    "last_name": "Coder",
+    "email": "prueba@gmail.com",
+    "age": "27",
+    "cart": [
+      {
+        "products": [],
+        "_id": 2
+      }
+    ],
+    "password": "$2b$10$yq.cceY2Pw7HacvggJDATes8G7cuWdgnHVY8Kd2ojXks8uXe7nk3e",
+    "documents": [],
+    "role": "user",
+    "last_connection": 1706908968763,
+    "_id": 1,
+    "iat": 1706908443,
+    "exp": 1706912043
+  },
+  {
+    "first_name": "Ventas",
+    "last_name": "Ventas",
+    "email": "ventas@gmail.com",
+    "age": "30",
+    "cart": [
+      {
+        "products": [],
+        "_id": 3
+      }
+    ],
+    "password": "$2b$10$Hth0gBv266SXNuAGhCTSBu1NRs3IXJycQAe9jH4ZxLsa4jn7t8qlK",
+    "documents": [],
+    "role": "premium",
+    "last_connection": 1706908412625,
+    "_id": 2,
+    "iat": 1706908112,
+    "exp": 1706911712
+  },
+  {
+    "first_name": "Administrador",
+    "last_name": "Jefe",
+    "email": "admin@gmail.com",
+    "age": "28",
+    "cart": [
+      {
+        "products": [],
+        "_id": 4
+      }
+    ],
+    "password": "$2b$10$csEiriccw0Gx9oY.CYfnbOzLIMOSOaB/FQBtO4eeJQZbPExMbLNnq",
+    "documents": [],
+    "role": "admin",
+    "last_connection": 1706908093847,
+    "_id": 3,
+    "iat": 1706907837,
+    "exp": 1706911437
+  }
+]

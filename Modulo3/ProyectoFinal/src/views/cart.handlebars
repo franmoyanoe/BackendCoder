@@ -1,0 +1,224 @@
+<nav class="navbar navbar-expand-lg" style="background-color: rgba(255, 255, 255, 0.1); color: white; border: none; border-radius: 10px; overflow: hidden; transition: transform .2s;">
+    <div class="container-fluid">
+        <img src="/static/images/logo.png" id="logo" style="height: 50px; width: 50px;">
+        <a class="navbar-brand" href="/home" style="color: white;"> Nuestra tienda</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" style="border-color: rgba(255, 255, 255, 0.2);">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            </ul>
+            <div class="d-flex align-items-center">
+                <a href="/profile" class="btn btn-outline-secondary me-2" style="color: white;">
+                    📇 Tu perfil
+                </a>
+                <a href="/api/sessions/logout" class="btn btn-outline-danger" style="color: white;">
+                    🚪 Cerrar sesión
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 text-center">
+            <h2 class="text-primary">🛒 Carrito de Compras</h2>
+            <p>Cart ID: <span id='cart-id'>{{cart._id}}</span></p>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <h4 class="text-primary">🧺 Productos en el Carrito:</h4>
+            {{#each cartDetail}}
+                <div class='card mb-3 shadow-sm'>
+                    <div class='row no-gutters align-items-center'>
+                        <div class='col-md-4 card-img-container'>
+                            <img src="{{this.thumbnail}}" class="card-img" alt="{{this.title}}">
+                        </div>
+                        <div class='col-md-8'>
+                            <div class='card-body'>
+                                <h5 class='card-title'>{{this.title}}</h5>
+                                <p>ID del Producto: <span class='text-info' id="product-id">{{this._id}}</span></p>
+                                <p>Precio Unitario: <span class='text-info'>{{this.price}} USD</span></p>
+                                <p>
+                                    Modifica cantidad: <input type="number" id="quantityInput" name="newQuantity" min="1" value="{{this.quantity}}" data-productId="{{this._id}}" data-cartId="{{../cart._id}}" class="form-control" style="display: inline-block;">
+                                </p>
+                                <button class='btn btn-danger delete-product mt-2' data-product-id='{{this._id}}'>🗑️ Eliminar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{/each}}    
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12 text-center">
+            <div class="total-container">
+                <h3 class="text-total">Total: {{totalPrice}} USD </h3>
+                <form action="/api/carts/{{cart._id}}/purchase" method="get">
+                    <button class='btn btn-success btn-lg'>💰 Confirmar Compra</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12 text-center">
+            <button id="empty-cart" class='btn btn-danger btn-lg'><i class="bi bi-cart-x-fill"></i> Vaciar Carrito</button>
+            <form action="/products" method="get" class='d-inline-block ml-2'>
+                <button class='btn btn-primary btn-lg'>🔙 Continuar Comprando</button>
+            </form>
+        </div>
+    </div>
+</div>
+<footer class="footer mt-auto py-3 bg-dark text-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 text-center">
+                <p>© 2024 Coder Backend - Developed by Franco Moyano</p>
+            </div>
+            <div class="col-md-6">
+                <h5>Contacto:</h5>
+                <a href="https://github.com/franmoyanoe" class="text-light"><i class="fab fa-github"></i> GitHub</a><br>
+                <a class="text-light">📧 francoemmanuelmoyano@gmail.com</a><br>
+                <p class="text-light">📍  Córdoba, Argentina.</p>
+            </div>            
+        </div>
+    </div>
+</footer>
+
+<script src="/static/js/cart.js"></script>
+
+<style>
+body {
+    background: linear-gradient(45deg,rgb(0, 118, 236) -52%,#000 81%,#014224 95%);
+    color: white;
+    font-family: 'Roboto', sans-serif;
+}
+
+.card {
+    min-height: 200px;
+    margin: 20px auto;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform .2s;
+    box-shadow: 0 4px 8px 0 rgba(255,255,255,0.2);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.card:hover {
+    transform: scale(1.00);
+    box-shadow: 0 8px 16px 0 rgba(255,255,255,0.2);
+}
+
+.card-img-container {
+    width: 200px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.card-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.card-body {
+    width: 600px;
+    padding: 20px;
+    overflow: auto;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-title {
+    font-size: 1.2em;
+    color: #28a745;
+    font-weight: bold;
+}
+
+
+.btn {
+    border: none;
+    border-radius: 50px;
+    padding: 10px 20px;
+    transition: background-color .2s, transform .2s;
+    margin: 10px;
+}
+
+.btn:hover {
+    color: white;
+    transform: scale(1.1);
+}
+
+.text-primary {
+    color: #28a745;
+}
+
+.btn-group {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.total-container {
+    border: 2px solid #8000ff;
+    border-radius: 25px;
+    padding: 20px;
+    margin: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #8000ff;
+    color: white;
+}
+
+.text-total {
+    color: rgb(255, 255, 255);
+    font-size: 1.5em;
+    margin: 0;
+    font-style: normal;
+}
+
+.btn-success {
+    padding: 10px 30px;
+    font-size: 1.2em;
+    background-color: #28a745;
+    color: white;
+}
+
+#quantityInput {
+
+    border-collapse: collapse;
+    -webkit-font-smoothing: antialiased;
+    display: block;
+    background: transparent;
+    color: rgba(0,0,0,.9);
+    font-family: inherit;
+    overflow: hidden;
+    resize: none;
+    border-radius: .375em;
+    height: 30px;
+    line-height: 22px;
+    margin: 0;
+    flex-grow: 1;
+    width: 74px;
+    align-items: center;
+    background-color: inherit;
+    font-size: 16px;
+    outline: none;
+    padding: 0;
+    text-align: center;
+}
+</style>
+
