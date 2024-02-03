@@ -30,7 +30,7 @@ Esta aplicación es un backend para una tienda en línea. Permite a los usuarios
 
 ## Deploy
 
-link deploy
+https://ecomercebackendcoder2024.onrender.com/home
 
 ### Views
 
@@ -108,7 +108,7 @@ En la vista de useradminmanager se muestra un listado de usuarios existentes y p
 
 ### Swagger
 
-- Accede a la documentación de la API en `linkDePloy/api/docs/`
+- Accede a la documentación de la API en `https://ecomercebackendcoder2024.onrender.com/api/docs/`
 
 ### Endpoints de la API
 
