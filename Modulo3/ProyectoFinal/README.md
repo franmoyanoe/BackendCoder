@@ -8,8 +8,8 @@ Esta aplicación es un backend para una tienda en línea. Permite a los usuarios
 
 ## Instalación
 
-1. Clona este repositorio: `link repositorio`
-2. Navega a la carpeta del proyecto: `cd carpeta`
+1. Clona este repositorio: `https://github.com/franmoyanoe/BackendCoder.git`
+2. Navega a la carpeta del proyecto: `cd Modulo3/ProyectoFinal`
 3. Instala las dependencias: `npm install`
 
 ## Scripts
