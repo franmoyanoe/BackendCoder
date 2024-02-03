@@ -14,9 +14,6 @@ export default {
     PERSISTENCE: process.env.PERSISTENCE,
     EMAIL_USER: process.env.EMAIL_USER,
     EMAIL_PASSWORD: process.env.EMAIL_PASSWORD,
-    CLIENT_ID: process.env.CLIENT_ID,
-    CLIENT_SECRET: process.env.CLIENT_SECRET,
-    CLIENT_CALLBACKURL: process.env.CLIENT_CALLBACKURL,
     NODE_ENV: environment 
 };
 
